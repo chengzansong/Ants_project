@@ -8,19 +8,11 @@ public class FoodBehavior : MonoBehaviour
     public Guid selectedcarrier;
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*move green dots to mouse pos
-        if(Mouse.current.leftButton.isPressed)
-        {
-            Vector2 mousepos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
-            transform.position = mousepos;
-            Debug.Log(mousepos);
-        }*/
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -34,6 +26,7 @@ public class FoodBehavior : MonoBehaviour
                 ant.carryingfood = true;
                 ant.pickUpFood(this.gameObject);
                 GetComponent<CircleCollider2D>().enabled = false;
+                ant.revert_direction();
             }
             /*if(!ant.carryingfood && ant != null && istaken)
             {

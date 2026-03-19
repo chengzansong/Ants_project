@@ -348,7 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnFood
   spawn: {fileID: 1857130087384287914, guid: 36656ced72528e543a2af0ec4b776c4c, type: 3}
   parent: {fileID: 281307713}
-  spacing: 0.29
+  spacing: 0.38
   x_left: -30
   x_right: -25
   y_left: 10
@@ -1085,7 +1085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5023545999139733306, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
       propertyPath: time_to_spawn
-      value: 0.44
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: 9205314508094624800, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
       propertyPath: m_Name

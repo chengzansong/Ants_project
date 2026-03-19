@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5831523363433737728}
   - component: {fileID: -1286497950962435594}
-  - component: {fileID: 2576054075261635573}
   - component: {fileID: -4499888551354848985}
   - component: {fileID: 810847299230352875}
   - component: {fileID: 7999678727320035190}
   - component: {fileID: 7644848091686052601}
-  m_Layer: 0
+  - component: {fileID: 4167721275211229657}
+  m_Layer: 6
   m_Name: Ant
   m_TagString: Ant
   m_Icon: {fileID: 0}
@@ -53,53 +53,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AntBehavior
   maxspeed: 3
   maxforce: 10
-  wanderstrength: 0.25
+  wanderstrength: 0.07
   rotationspeed: 100
-  time_between_pheromone: 1
+  time_between_pheromone: 0.25
   countdown: 1
+  pheromone_strength: 0.7
+  home_attraction: 0.61
   foodtarget: {fileID: 0}
   anthill: {fileID: 9205314508094624800, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
   pheromone: {fileID: 5520207528195347957, guid: 862a49e1929e8c847a80aa2cf59a052a, type: 3}
   head: {fileID: 6269130174249800866}
   selectedfood: 0
   carryingfood: 0
---- !u!70 &2576054075261635573
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665571894514085271}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 2.17}
-  m_Size: {x: 4, y: 6.22}
-  m_Direction: 0
+  tohome:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  tofood:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 256
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  check_pheromone: 1
+  check_countdown: 1
 --- !u!114 &-4499888551354848985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +230,42 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!58 &4167721275211229657
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665571894514085271}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 3}
+  m_Radius: 3
 --- !u!1 &6717702071569079828
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1138147082869130922}
   - component: {fileID: 7902666502595194255}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AntBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6269130174249800866}
   - component: {fileID: 8991651409704873263}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AntHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

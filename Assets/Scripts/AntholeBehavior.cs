@@ -3,12 +3,12 @@ using UnityEngine;
 public class AntholeBehavior : MonoBehaviour
 {
     public GameObject spawn;
+    [SerializeField] Transform parent;
     public float time_to_spawn = 1f, spawn_countdown = 1f;
     public int maxspawn = 50; 
     int count = 0;
     void Start()
     {
-        spawn_countdown = time_to_spawn;
     }
     void Update()
     {
@@ -17,7 +17,7 @@ public class AntholeBehavior : MonoBehaviour
         {
             spawn_countdown = time_to_spawn;
             int random_rotation = Random.Range(0,360);
-            Instantiate(spawn, transform.position, Quaternion.Euler(0,0,random_rotation));
+            Instantiate(spawn, transform.position, Quaternion.Euler(0,0,random_rotation), parent);
             count++;
         }
     }

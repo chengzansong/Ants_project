@@ -10,10 +10,10 @@ public class PheromoneBehavior : MonoBehaviour
     private float lifetime = 0f;
     SpriteRenderer sr;
     Color baseColor;
-    void Start()
+    [SerializeField] Color tohome, tofood;
+    void Awake()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
-        baseColor = sr.color;
     }
 
     // Update is called once per frame
@@ -27,6 +27,23 @@ public class PheromoneBehavior : MonoBehaviour
         if(decay==0)
         {
             Destroy(gameObject);
+        }
+    }
+    public void initialize(String type)
+    {
+        if(type == "tofood")
+        {
+            baseColor = tofood;
+            gameObject.tag = "tofood_pheromone";
+            sr.color = baseColor;
+            gameObject.layer = LayerMask.NameToLayer("tofood_pheromone");
+        }
+        else if(type == "tohome")
+        {
+            baseColor = tohome;
+            gameObject.tag = "tohome_pheromone";
+            sr.color = baseColor;
+            gameObject.layer = LayerMask.NameToLayer("tohome_pheromone");
         }
     }
 }

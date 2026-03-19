@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -9042096797552496920}
   - component: {fileID: -7672367067179659749}
   - component: {fileID: 8592285378373456790}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Food
   m_TagString: Food
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7213102043388364316}
   - component: {fileID: 7574354176682386703}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

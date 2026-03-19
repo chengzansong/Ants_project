@@ -139,9 +139,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntholeBehavior
   spawn: {fileID: 665571894514085271, guid: 42a550fa314f235419b5d2ea00b23e07, type: 3}
+  parent: {fileID: 0}
   time_to_spawn: 0.31
   spawn_countdown: 1
-  maxspawn: 21
+  maxspawn: 30
 --- !u!50 &1913580044583110453
 Rigidbody2D:
   serializedVersion: 5

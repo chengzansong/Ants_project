@@ -8,6 +8,8 @@ TagManager:
   - Ant
   - Anthole
   - Wall
+  - tofood_pheromone
+  - tohome_pheromone
   - Pheromone
   layers:
   - Default
@@ -16,11 +18,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - ants
+  - tohome_pheromone
+  - tofood_pheromone
+  - food
+  - pheromone
   - 
   - 
   - 

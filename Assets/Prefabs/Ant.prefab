@@ -52,13 +52,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntBehavior
   maxspeed: 3
-  maxforce: 10
-  wanderstrength: 0.07
+  maxforce: 40.52
+  wanderstrength: 0.22
   rotationspeed: 100
   time_between_pheromone: 0.25
   countdown: 1
   pheromone_strength: 0.7
-  home_attraction: 0.61
+  home_attraction: 0
   foodtarget: {fileID: 0}
   anthill: {fileID: 9205314508094624800, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
   pheromone: {fileID: 5520207528195347957, guid: 862a49e1929e8c847a80aa2cf59a052a, type: 3}
@@ -93,8 +93,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  check_pheromone: 1
-  check_countdown: 1
+  check_pheromone: 0.34
 --- !u!114 &-4499888551354848985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +263,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 3}
+  m_Offset: {x: 0, y: 2.52}
   m_Radius: 3
 --- !u!1 &6717702071569079828
 GameObject:

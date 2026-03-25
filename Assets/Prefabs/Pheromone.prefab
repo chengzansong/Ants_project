@@ -173,8 +173,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c73bab514c7abe944b74a525d5c6555a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PheromoneBehavior
-  direction: {x: 0, y: 0}
   decay: 1
-  evaporationtime: 20
+  evaporationtime: 50
   tohome: {r: 0, g: 0.71954393, b: 1, a: 0}
   tofood: {r: 1, g: 0.7137255, b: 0, a: 0}
+  top_wall: {fileID: 0}
+  left_wall: {fileID: 0}
+  anthole: {fileID: 0}

@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 27385479}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2498, y: -22.3, z: 0}
+  m_LocalPosition: {x: 2.2498, y: -39.7, z: 0}
   m_LocalScale: {x: 150, y: 0.90012, z: 0.90012}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -349,10 +349,10 @@ MonoBehaviour:
   spawn: {fileID: 1857130087384287914, guid: 36656ced72528e543a2af0ec4b776c4c, type: 3}
   parent: {fileID: 281307713}
   spacing: 0.29
-  x_left: -30
-  x_right: -25
-  y_left: 10
-  y_right: 15
+  x_left: -60
+  x_right: -55
+  y_left: 25
+  y_right: 30
 --- !u!1 &298732704
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,11 +398,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4186626792875482589, guid: 19313bc18316e6442b300e4c1a8931dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.2
+      value: -76.6
       objectReference: {fileID: 0}
     - target: {fileID: 4186626792875482589, guid: 19313bc18316e6442b300e4c1a8931dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.1
+      value: 13.8
       objectReference: {fileID: 0}
     - target: {fileID: 4186626792875482589, guid: 19313bc18316e6442b300e4c1a8931dd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -469,7 +469,7 @@ Transform:
   m_GameObject: {fileID: 847520409}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2498, y: 22.7, z: 0}
+  m_LocalPosition: {x: 2.2498, y: 39.7, z: 0}
   m_LocalScale: {x: 150, y: 0.90012, z: 0.90012}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -621,8 +621,8 @@ Transform:
   m_GameObject: {fileID: 983481469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -44.178406, y: 8.568801, z: 0}
-  m_LocalScale: {x: 12.367948, y: 1.6564659, z: 0.85507643}
+  m_LocalPosition: {x: -88.9, y: 15.8, z: 0}
+  m_LocalScale: {x: 20.156368, y: 2.5456676, z: 0.85507643}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1847740344}
@@ -773,7 +773,7 @@ Transform:
   m_GameObject: {fileID: 993740601}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -37.9, y: 0.2, z: 0}
+  m_LocalPosition: {x: -68.4, y: 0.2, z: 0}
   m_LocalScale: {x: 80, y: 0.85507643, z: 0.85507643}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -925,7 +925,7 @@ Transform:
   m_GameObject: {fileID: 1488432222}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 42.3, y: 0.2, z: 0}
+  m_LocalPosition: {x: 72.9, y: 0.2, z: 0}
   m_LocalScale: {x: 80, y: 0.85507643, z: 0.85507643}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1149,7 +1149,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 22.79
+  orthographic size: 10.46
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1252,8 +1252,8 @@ Transform:
   m_GameObject: {fileID: 2035459501}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -63.960503, y: 8.568801, z: 0}
-  m_LocalScale: {x: 12.367948, y: 1.6564659, z: 0.85507643}
+  m_LocalPosition: {x: -119.3, y: 15.8, z: 0}
+  m_LocalScale: {x: 20.156368, y: 2.5456676, z: 0.85507643}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1847740344}
@@ -1450,8 +1450,8 @@ Transform:
   m_GameObject: {fileID: 2065758446}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.1, y: 8.5, z: 0}
-  m_LocalScale: {x: 20.932718, y: 13.000562, z: 0.90012}
+  m_LocalPosition: {x: -104.147, y: 15.6878, z: 0}
+  m_LocalScale: {x: 32.16954, y: 21.187355, z: 0.90012}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1847740344}
@@ -1628,7 +1628,7 @@ PrefabInstance:
       objectReference: {fileID: 28558036}
     - target: {fileID: 5023545999139733306, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
       propertyPath: maxspawn
-      value: 26
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5023545999139733306, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
       propertyPath: time_to_spawn

@@ -11,6 +11,7 @@ TagManager:
   - tofood_pheromone
   - tohome_pheromone
   - Pheromone
+  - avoid_pheromone
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - tofood_pheromone
   - food
   - pheromone
-  - 
+  - avoid_pheromone
   - 
   - 
   - 

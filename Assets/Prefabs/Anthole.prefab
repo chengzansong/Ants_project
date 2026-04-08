@@ -142,7 +142,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   time_to_spawn: 1.67
   spawn_countdown: 1
-  maxspawn: 29
+  maxspawn: 1
 --- !u!50 &1913580044583110453
 Rigidbody2D:
   serializedVersion: 5

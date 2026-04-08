@@ -175,8 +175,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PheromoneBehavior
   decay: 1
   evaporationtime: 50
+  distance: 1
   tohome: {r: 0, g: 0.71954393, b: 1, a: 0}
   tofood: {r: 1, g: 0.7137255, b: 0, a: 0}
-  top_wall: {fileID: 0}
-  left_wall: {fileID: 0}
-  anthole: {fileID: 0}
+  radius: 0.3
+  food: {fileID: 0}
+  alarm:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 2048
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  marked_avoid: 0

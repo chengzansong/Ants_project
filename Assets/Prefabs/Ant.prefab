@@ -52,16 +52,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntBehavior
   maxspeed: 3
-  maxforce: 40.52
-  wanderstrength: 0.22
+  maxforce: 100
+  wanderstrength: 0.19
   rotationspeed: 100
   time_between_pheromone: 0.25
   countdown: 1
-  pheromone_strength: 0.7
+  detection_displacement: 1.5
+  detection_radius: 3
   home_attraction: 0
+  wobblefrequency: 10
+  avoidance_factor: 2.51
   foodtarget: {fileID: 0}
   anthill: {fileID: 9205314508094624800, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
-  pheromone: {fileID: 5520207528195347957, guid: 862a49e1929e8c847a80aa2cf59a052a, type: 3}
+  tracking_pheromone: {fileID: 5520207528195347957, guid: 862a49e1929e8c847a80aa2cf59a052a, type: 3}
+  carriedfood: {fileID: 0}
+  alarm_pheromone: {fileID: 4606144404695148268, guid: e897c55d8951a83458a49d774edd730e, type: 3}
   head: {fileID: 6269130174249800866}
   selectedfood: 0
   carryingfood: 0
@@ -93,7 +98,11 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  check_pheromone: 0.34
+  check_pheromone: 0.22
+  wobble_amplitude: 1
+  pheromonetarget: {fileID: 0}
+  pheromone_size: 0
+  debugLength: 3
 --- !u!114 &-4499888551354848985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,10 +128,10 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 567
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 448
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -132,7 +141,7 @@ CapsuleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 567
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -242,7 +251,7 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 567
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 384
@@ -263,7 +272,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 2.52}
+  m_Offset: {x: 0, y: 3}
   m_Radius: 3
 --- !u!1 &6717702071569079828
 GameObject:

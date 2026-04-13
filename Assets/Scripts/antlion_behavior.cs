@@ -36,7 +36,11 @@ public class antlion_behavior : MonoBehaviour
                 ants_in_detection.RemoveAt(i);
                 continue;
             }
-            AntBehavior ant = ants_in_detection[i].GetComponent<AntBehavior>();
+            
+            AntBehavior ant = ants_in_detection[i].GetComponent<AntBehavior>();/*
+            SpriteRenderer antlionRenderer = this.GetComponent<SpriteRenderer>();
+            SpriteRenderer antRenderer = ant.GetComponent<SpriteRenderer>();
+            antRenderer.sortingOrder = antlionRenderer.sortingOrder + 1;*/
             ant.intiate_antlion_death(transform.position);
         }
     }

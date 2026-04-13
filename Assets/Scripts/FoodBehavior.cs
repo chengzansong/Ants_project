@@ -28,12 +28,6 @@ public class FoodBehavior : MonoBehaviour
                 GetComponent<CircleCollider2D>().enabled = false;
                 ant.revert_direction();
             }
-            /*if(!ant.carryingfood && ant != null && istaken)
-            {
-                ant.carryingfood = true;
-                ant.pickUpFood(this.gameObject);
-                GetComponent<CircleCollider2D>().enabled = false;
-            }*/
         }
     }
 }

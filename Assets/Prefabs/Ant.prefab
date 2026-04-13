@@ -61,7 +61,7 @@ MonoBehaviour:
   detection_radius: 3
   home_attraction: 0
   wobblefrequency: 10
-  avoidance_factor: 2.51
+  time_in_panic: 5
   foodtarget: {fileID: 0}
   anthill: {fileID: 9205314508094624800, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
   tracking_pheromone: {fileID: 5520207528195347957, guid: 862a49e1929e8c847a80aa2cf59a052a, type: 3}
@@ -70,6 +70,7 @@ MonoBehaviour:
   head: {fileID: 6269130174249800866}
   selectedfood: 0
   carryingfood: 0
+  panicmode: 0
   tohome:
     useTriggers: 0
     useLayerMask: 1
@@ -100,8 +101,6 @@ MonoBehaviour:
     maxNormalAngle: 0
   check_pheromone: 0.22
   wobble_amplitude: 1
-  pheromonetarget: {fileID: 0}
-  pheromone_size: 0
   debugLength: 3
 --- !u!114 &-4499888551354848985
 MonoBehaviour:

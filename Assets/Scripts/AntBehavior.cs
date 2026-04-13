@@ -9,12 +9,12 @@ public class AntBehavior : MonoBehaviour
 {
     public float maxspeed = 1f, maxforce = 1f, wanderstrength = 1f,rotationspeed = 1f;
     public float time_between_pheromone = 1f, countdown = 1f, detection_displacement = 1.5f, detection_radius = 1.5f;
-    [SerializeField] float home_attraction = 1f, wobblefrequency = 1f, avoidance_factor = 1f;
+    [SerializeField] float home_attraction = 1f, wobblefrequency = 1f, time_in_panic = 10f;
     public GameObject foodtarget = null, anthill, tracking_pheromone, carriedfood, alarm_pheromone;
     public Transform head;
-    Vector2 position, velocity, desired_direction, desired_velocity, desired_force, acceleration, antlion_pos;
+    Vector2 position, velocity, desired_direction, desired_velocity, desired_force, acceleration, antlion_pos, panicvector, lastpanic;
     [SerializeField] bool selectedfood = false;
-    public bool carryingfood = false;
+    public bool carryingfood = false, panicmode = false;
     List<GameObject> to_food_pheromone_in_range = new List<GameObject>(), to_home_pheromone_in_range = new List<GameObject>();
     List<Collider2D> to_food_pheromone_colliders = new List<Collider2D>(), to_home_pheromone_colliders = new List<Collider2D>();
     AntBehavior ant;
@@ -23,7 +23,7 @@ public class AntBehavior : MonoBehaviour
     public Guid Id => id;
     public ContactFilter2D tohome, tofood;
     [SerializeField] float check_pheromone = 1f, wobble_amplitude = 1f;
-    private float check_countdown = 1f, time_since_food = 0f, time_since_home = 0f, time_alive = 0f, alarm_pheromone_time = 1f;
+    private float check_countdown = 1f, time_since_food = 0f, time_since_home = 0f, time_alive = 0f, alarm_pheromone_time = 1f,panic_countdown;
     private Transform pheromone_placeholder;
     void Start()
     {
@@ -40,10 +40,8 @@ public class AntBehavior : MonoBehaviour
             alarm_pheromone_time -= Time.deltaTime;
             if(alarm_pheromone_time < 0)
             {
-                alarm_pheromone_time = Mathf.Infinity;
-                GameObject gameObject = Instantiate(alarm_pheromone, transform.position, Quaternion.identity, pheromone_placeholder);
-                Alarm_pheromone_behavior newPheromone = gameObject.GetComponent<Alarm_pheromone_behavior>();
-                newPheromone.initialize("avoid");//initialize it according to its type
+                release_alarm_pheromone();
+                
             }
             antlion_death_animation();
             return;
@@ -141,6 +139,14 @@ public class AntBehavior : MonoBehaviour
 
             desired_direction = desired_direction.normalized;
 
+            if(panicmode)
+            {
+                if(panicvector == new Vector2(0,0)) panicvector = lastpanic;
+                desired_direction = panicvector.normalized;
+                lastpanic = desired_direction;
+                panicvector = new Vector2(0,0);
+            }
+
             lay_pheromones("tofood", time_since_food);
         }
         else //randomly wander, with pheromones
@@ -153,13 +159,26 @@ public class AntBehavior : MonoBehaviour
             desired_direction += newdirection * wanderstrength;
             desired_direction = desired_direction.normalized;
 
+            
+            if(panicmode)
+            {
+                if(panicvector == new Vector2(0,0)) panicvector = lastpanic;
+                desired_direction = panicvector.normalized;
+                lastpanic = desired_direction;
+                panicvector = new Vector2(0,0);
+            }
+
             lay_pheromones("tohome", time_since_home);
         }
-    }
+        panic_countdown-=Time.deltaTime;
+        if(panic_countdown<=0)
+        {
+            end_panic_mode();
+        }
+}
     Vector2 calculate_pheromones(List<GameObject>usedlist)
     {
         Vector2 direction = new Vector2(0,0);
-        Vector2 avoidance = new Vector2(0,0);
         GameObject temp, closest = null;
         float distance = Mathf.Infinity;
         for(int i = usedlist.Count-1; i >= 0; i--)
@@ -171,12 +190,7 @@ public class AntBehavior : MonoBehaviour
             }
             temp = usedlist[i];
             PheromoneBehavior temppheromone = temp.GetComponent<PheromoneBehavior>();
-            if(temppheromone.check_avoid())
-            {
-                avoidance -= ((Vector2)temppheromone.transform.position- (Vector2)transform.position).normalized;
-                Debug.Log($"avoided pheromones");
-            }
-            else if(temppheromone.distance<distance)
+            if(temppheromone.distance<distance)
             {
                 distance = temppheromone.distance;
                 closest = usedlist[i];
@@ -186,7 +200,6 @@ public class AntBehavior : MonoBehaviour
         {
             direction = ((Vector2)closest.transform.position - (Vector2)transform.position).normalized;
         }
-        direction += avoidance * avoidance_factor;
         direction = direction.normalized;
         return direction;
     }
@@ -237,6 +250,8 @@ public class AntBehavior : MonoBehaviour
             Destroy(carriedfood);   
             carriedfood = null;
             foundbase = false;
+            AntholeBehavior anthole = collision.gameObject.GetComponent<AntholeBehavior>();
+            anthole.accumulate_food();
         }
         if(collision.gameObject.tag == "Wall")
         {
@@ -279,10 +294,35 @@ public class AntBehavior : MonoBehaviour
         position += velocity*Time.deltaTime;
 
         float wobble = Mathf.Cos(time_alive*wobblefrequency)*wobble_amplitude;
-        Debug.Log($"wobble: {wobble}");
         Vector2 perp = new Vector2(-desired_velocity.y, desired_velocity.x);
         Vector2 tempvec = -desired_velocity + perp*wobble;
         Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, tempvec);
         transform.SetPositionAndRotation(position, toRotation);
+    }
+    public void initiate_panic_mode()
+    {
+        panic_countdown = time_in_panic;
+        panicmode = true;
+        desired_direction = desired_direction*(-1);
+        //currently this makes it so that new alarm pheromones released by the ants also release new alarm pheromones leading to a cycle of destruction
+        //will fix later
+        /*Alarm_pheromone_behavior alarm = release_alarm_pheromone();
+        alarm.changeradius();*/
+    }
+    void end_panic_mode()
+    {
+        panicmode = false;
+    }
+    Alarm_pheromone_behavior release_alarm_pheromone()
+    {
+        alarm_pheromone_time = Mathf.Infinity;
+        GameObject gameObject = Instantiate(alarm_pheromone, transform.position, Quaternion.identity, pheromone_placeholder);
+        Alarm_pheromone_behavior newPheromone = gameObject.GetComponent<Alarm_pheromone_behavior>();
+        newPheromone.initialize("avoid");//initialize it according to its type
+        return newPheromone;
+    }
+    public void modify_panicvector(Vector2 change)
+    {
+        panicvector += change;
     }
 }

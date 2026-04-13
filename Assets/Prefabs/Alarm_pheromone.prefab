@@ -50,7 +50,23 @@ MonoBehaviour:
   evaporationtime: 50
   alarm_color: {r: 1, g: 0, b: 0, a: 0}
   initial_size: 1
-  final_size: 20
+  final_size: 10
+  ant_check_time: 0.14
+  secondary_radius: 2.5
+  ants:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!58 &-4910222894155828082
 CircleCollider2D:
   m_ObjectHideFlags: 0

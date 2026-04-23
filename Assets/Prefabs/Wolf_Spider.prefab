@@ -373,9 +373,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4472806808005336684}
-  - component: {fileID: 7247111003955898172}
   - component: {fileID: 321209872325274737}
   - component: {fileID: 2441704878108920545}
+  - component: {fileID: -7359721924839038362}
   m_Layer: 0
   m_Name: Wolf_Spider
   m_TagString: Untagged
@@ -407,42 +407,6 @@ Transform:
   - {fileID: 365508513444068288}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &7247111003955898172
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3105354227492890550}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 1975
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 6
 --- !u!58 &321209872325274737
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -456,10 +420,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1975
+    m_Bits: 1974
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -469,7 +433,7 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -505,16 +469,54 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  maxspeed: 3
   maxforce: 20
   wanderstrength: 0.07
-  detection_radius: 6
   collision_radius: 2.1
   checktimer: 0.3
-  countdown: 0
-  x: 20
-  y: 30
+  x: -14.9
+  y: -16.6
+  debugLength: 15.9
   anttarget: {fileID: 0}
+  mass: 1
+  speed: 3
+  sense: 6
+  energy_loss_time: 1
+  cur_energy: 0
+  maxenergymult: 1000
+  ant_nutrition_value: 300
+  genome:
+    speed: 0
+    sense: 0
+    mass: 0
+    age: 0
+  ants_eaten: 0
+--- !u!50 &-7359721924839038362
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3105354227492890550}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5694841647346311610
 GameObject:
   m_ObjectHideFlags: 0

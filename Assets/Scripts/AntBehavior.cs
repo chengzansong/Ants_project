@@ -25,6 +25,7 @@ public class AntBehavior : MonoBehaviour
     [SerializeField] float check_pheromone = 1f, wobble_amplitude = 1f;
     private float check_countdown = 1f, time_since_food = 0f, time_since_home = 0f, time_alive = 0f, alarm_pheromone_time = 1f,panic_countdown;
     private Transform pheromone_placeholder;
+
     void Start()
     {
         pheromone_placeholder = GameObject.Find("Spawned_pheromones").transform;
@@ -97,6 +98,7 @@ public class AntBehavior : MonoBehaviour
     }
     public float debugLength = 3f;
 
+    /* code to draw out the detection radius and desired direction
     void OnDrawGizmos()
     {
         //vector
@@ -111,6 +113,7 @@ public class AntBehavior : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(center, detection_radius);
     }
+    */
 
     void directionDecision()
     {
@@ -175,7 +178,7 @@ public class AntBehavior : MonoBehaviour
         {
             end_panic_mode();
         }
-}
+    }
     Vector2 calculate_pheromones(List<GameObject>usedlist)
     {
         Vector2 direction = new Vector2(0,0);

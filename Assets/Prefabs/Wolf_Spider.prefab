@@ -477,19 +477,22 @@ MonoBehaviour:
   y: -16.6
   debugLength: 15.9
   anttarget: {fileID: 0}
+  full: 0
   mass: 1
   speed: 3
   sense: 6
   energy_loss_time: 1
   cur_energy: 0
-  maxenergymult: 1000
-  ant_nutrition_value: 300
+  maxenergymult: 8000
+  ant_nutrition_value: 2400
   genome:
     speed: 0
     sense: 0
     mass: 0
     age: 0
   ants_eaten: 0
+  ants_needed: 5
+  fullcolor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!50 &-7359721924839038362
 Rigidbody2D:
   serializedVersion: 5

@@ -7,9 +7,9 @@ using UnityEditor.Rendering;
 
 public class AntBehavior : MonoBehaviour
 {
-    public float maxspeed = 1f, maxforce = 1f, wanderstrength = 1f,rotationspeed = 1f;
+    public float maxspeed = 1f, maxforce = 1f, wanderstrength = 1f,rotationspeed = 1f, mass = 1f;
     public float time_between_pheromone = 1f, countdown = 1f, detection_displacement = 1.5f, detection_radius = 1.5f;
-    [SerializeField] float home_attraction = 1f, wobblefrequency = 1f, time_in_panic = 10f;
+    [SerializeField] float home_attraction = 1f, wobblefrequency = 1f, time_in_panic = 10f, minmass = 0.5f, maxmaff = 1.5f;
     public GameObject foodtarget = null, anthill, tracking_pheromone, carriedfood, alarm_pheromone;
     public Transform head;
     Vector2 position, velocity, desired_direction, desired_velocity, desired_force, acceleration, antlion_pos, panicvector, lastpanic;
@@ -32,6 +32,7 @@ public class AntBehavior : MonoBehaviour
         check_countdown = UnityEngine.Random.Range(0f,1f);
         position = transform.position;
         velocity = new Vector2(0,0);
+        maxspeed /= mass;//speed scales off of mass
     }
     void Update()
     {
@@ -208,6 +209,7 @@ public class AntBehavior : MonoBehaviour
     }
     void lay_pheromones(String type, float time)
     {
+        return; // temporarily just end the lay pheromones so it doesnt lag as badly
         countdown -= Time.deltaTime;
         if(countdown <= 0)
         {

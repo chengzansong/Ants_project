@@ -70,16 +70,7 @@ public class SimulationManager : MonoBehaviour
 
         timer = spider_spawn_time;
         simtimer = simtime;
-        for(int i = survivors.Count-1; i>=0; i--)
-        {
-            if(survivors[i] == null)
-            {
-                survivors.RemoveAt(i);
-                continue;
-            }
-            Destroy(survivors[i].gameObject);
-            survivors.RemoveAt(i);
-        }
+        destroy_spiders();
         survivors.Clear();
         startsim();
     }
@@ -120,8 +111,32 @@ public class SimulationManager : MonoBehaviour
         Vector2 spawnpos = new Vector2(0,0);
         anthole = Instantiate(antholeprefab, spawnpos, quaternion.identity);
     }
+    void destroy_spiders()
+    {
+        for(int i = survivors.Count-1; i>=0; i--)
+        {
+            if(survivors[i] == null)
+            {
+                survivors.RemoveAt(i);
+                continue;
+            }
+            Destroy(survivors[i].gameObject);
+            survivors.RemoveAt(i);
+        }
+        for(int i = spawnedspiders.Count-1; i>=0; i--)
+        {
+            if(spawnedspiders[i] == null)
+            {
+                spawnedspiders.RemoveAt(i);
+                continue;
+            }
+            Destroy(spawnedspiders[i].gameObject);
+            spawnedspiders.RemoveAt(i);
+        }
+    }
     public void clearworld()
     {
+        destroy_spiders();
         if(anthole != null)
         {
             AntholeBehavior anthole_obj = anthole.gameObject.GetComponent<AntholeBehavior>();

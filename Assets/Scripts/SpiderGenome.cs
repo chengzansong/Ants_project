@@ -13,6 +13,6 @@ public class SpiderGenome
     }
     public SpiderGenome clone()
     {
-        return new SpiderGenome(speed, sense, mass, 0f);
+        return new SpiderGenome(speed, sense, mass, age);
     }
 }

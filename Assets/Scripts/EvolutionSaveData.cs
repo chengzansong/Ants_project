@@ -11,5 +11,6 @@ public class EvolutionSaveData
 public class GenerationRecord
 {
     public int generation;
+    public int survivors;
     public List<SpiderGenome> genomes;
 }

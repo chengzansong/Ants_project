@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.Analytics;
+using UnityEngine.Rendering;
 
 public class SpiderBehavior : MonoBehaviour
 {
@@ -10,14 +11,14 @@ public class SpiderBehavior : MonoBehaviour
     List<Collider2D> colliders_in_detection = new List<Collider2D>(), colliders_in_collision = new List<Collider2D>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public ContactFilter2D ants;
-    [SerializeField] float maxforce = 20f, wanderstrength = 0.07f, collision_radius = 1f, checktimer = 0.3f, x, y, debugLength = 1f;
+    [SerializeField] float maxforce = 20f, wanderstrength = 0.07f, collision_radius = 1f, checktimer = 0.3f, x, y, debugLength = 1f, ants_stack_timer = 30f, ants_stack_countdown;
     Vector2 position, velocity, desired_direction, desired_velocity, desired_force, acceleration;
     public GameObject anttarget = null;
     private bool selectedant = false;
     public bool full = false;
 
-    [SerializeField] float mass = 1f, speed = 1f, sense = 1f, energy_loss_time = 1f, cur_energy, maxenergymult = 1f, ant_nutrition_value = 10f;
-    private float countdown, energy_countdown, maxenergy, eloss_per_step, detection_radius, maxspeed, age;
+    [SerializeField] float mass = 1f, speed = 1f, sense = 1f, energy_loss_time = 1f, cur_energy, maxenergymult = 1f, ant_nutrition_value = 10f, HP, base_HP = 10f;
+    private float countdown, energy_countdown, maxenergy, eloss_per_step, detection_radius, maxspeed, ants_stack;
     public SpiderGenome genome;
     [SerializeField] int ants_eaten = 0, ants_needed = 5;
     [SerializeField] private Color fullcolor = Color.yellow;
@@ -25,6 +26,10 @@ public class SpiderBehavior : MonoBehaviour
 
     void Start()
     {
+        ants_stack = 0;
+        ants_stack_countdown = ants_stack_timer;
+        base_HP *= mass;
+        HP = base_HP;
         transform.position = new Vector2(x, y);
         position = new Vector2(x, y);
         countdown = checktimer;
@@ -40,7 +45,7 @@ public class SpiderBehavior : MonoBehaviour
         sense = genome.sense;
         mass = genome.mass;
 
-        maxenergy = maxenergymult * Mathf.Pow(mass, 0.75f); // Kleiber's law
+        maxenergy = maxenergymult;
         cur_energy = maxenergy;
         eloss_per_step = mass*Mathf.Pow(speed, 2f) + Mathf.Pow(sense, 2f);
 
@@ -48,11 +53,10 @@ public class SpiderBehavior : MonoBehaviour
         maxspeed = speed;
 
         ants_eaten = 0;
-        age = 0f;
     }
     void Update()
     {
-        if(full)
+        if(full && ants_stack_countdown <=0)
         {
             return;
         }
@@ -60,6 +64,10 @@ public class SpiderBehavior : MonoBehaviour
         if(ants_eaten >= ants_needed)
         {
             become_full();
+        }
+        if(HP< 0)
+        {
+            Destroy(gameObject);
         }
         if(energy_countdown <= 0 && ants_eaten < ants_needed)
         {
@@ -69,6 +77,13 @@ public class SpiderBehavior : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+        ants_stack_countdown -= Time.deltaTime;
+        if(ants_stack_countdown <= 0)
+        {
+            if(full) return;
+            ants_stack_countdown = ants_stack_timer;
+            ants_stack = 0;
         }
         countdown -= Time.deltaTime;
         if(countdown <= 0)
@@ -149,6 +164,10 @@ public class SpiderBehavior : MonoBehaviour
             }
             ants_eaten++;
             cur_energy += ant_nutrition_value;
+            AntBehavior ant = ants_in_collision[i].GetComponent<AntBehavior>();
+            HP -= Mathf.Pow(2, ant.mass*5/this.mass)* Mathf.Pow(1.7f, ants_stack);
+            ants_stack++;
+            ants_stack_countdown = ants_stack_timer;
             Destroy(ants_in_collision[i]);
         }
     }

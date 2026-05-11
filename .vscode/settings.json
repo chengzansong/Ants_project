@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Ants_project-main.slnx"
+    "dotnet.defaultSolution": "Ants_project.slnx"
 }

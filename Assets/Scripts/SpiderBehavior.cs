@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 
 public class SpiderBehavior : MonoBehaviour
 {
+    public bool attack = false;
     List<GameObject> ants_in_detection = new List<GameObject>(), ants_in_collision = new List<GameObject>();
     List<Collider2D> colliders_in_detection = new List<Collider2D>(), colliders_in_collision = new List<Collider2D>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,6 +25,7 @@ public class SpiderBehavior : MonoBehaviour
     [SerializeField] int ants_eaten = 0, ants_needed = 5, scaredness = 1;
     [SerializeField] private Color fullcolor = Color.yellow;
     private SpriteRenderer[] srs;
+    string mode;
 
     void Start()
     {
@@ -37,6 +39,14 @@ public class SpiderBehavior : MonoBehaviour
         countdown = checktimer;
         energy_countdown = energy_loss_time;
         srs = GetComponentsInChildren<SpriteRenderer>();
+        if(attack)
+        {
+            mode = "attack";
+        }
+        else
+        {
+            mode = "avoid";
+        }
     }
     
     public void apply_genome(SpiderGenome new_genome)
@@ -182,7 +192,7 @@ public class SpiderBehavior : MonoBehaviour
             HP -= Mathf.Pow(2, ant.mass*5/this.mass)* Mathf.Pow(1.7f, ants_stack);
             ants_stack++;
 
-            ant.release_alarm_pheromone("attack");
+            ant.release_alarm_pheromone(mode);
 
             ants_stack_countdown = ants_stack_timer;
             Destroy(ants_in_collision[i]);

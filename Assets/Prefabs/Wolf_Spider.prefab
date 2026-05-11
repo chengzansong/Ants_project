@@ -455,6 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3067c64af142a774b95783785deacd2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpiderBehavior
+  attack: 0
   ants:
     useTriggers: 0
     useLayerMask: 1

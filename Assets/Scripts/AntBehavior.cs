@@ -7,6 +7,7 @@ using UnityEditor.Rendering;
 
 public class AntBehavior : MonoBehaviour
 {
+    
     public float maxspeed = 1f, maxforce = 1f, wanderstrength = 1f,rotationspeed = 1f, mass = 1f, attack_speed_multiplier = 1f;
     public float time_between_pheromone = 1f, countdown = 1f, detection_displacement = 1.5f, detection_radius = 1.5f;
     [SerializeField] float home_attraction = 1f, wobblefrequency = 1f, time_in_alert = 10f;

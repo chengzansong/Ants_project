@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Alarm_pheromone_behavior
   decay: 1
-  evaporationtime: 50
+  evaporationtime: 20
   alarm_color: {r: 1, g: 0, b: 0, a: 0}
   initial_size: 1
-  final_size: 10
+  final_size: 30
   ant_check_time: 0.14
   secondary_radius: 2.5
   ants:

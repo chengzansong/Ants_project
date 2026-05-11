@@ -15,6 +15,7 @@ public class Alarm_pheromone_behavior : MonoBehaviour
     List<Collider2D> ants_colliders = new List<Collider2D>(); 
     List<GameObject> ants_touching_pheromones = new List<GameObject>();
     public ContactFilter2D ants;
+    String type;
     void Awake()
     {
         sr = GetComponentInChildren<SpriteRenderer>(); 
@@ -41,7 +42,8 @@ public class Alarm_pheromone_behavior : MonoBehaviour
         if(countdown<ant_check_time)
         {
             checkants();
-            alertants();
+            if(type == "avoid")scareAnts();
+            if(type == "attack")aggrevateAnts();
         }
     }
     /*
@@ -54,6 +56,7 @@ public class Alarm_pheromone_behavior : MonoBehaviour
     }*/
     public void initialize(String type)
     {
+        this.type = type;
         //Debug.Log($"normalized distance {normalized_distance}");
         if(type == "avoid")
         {
@@ -62,12 +65,38 @@ public class Alarm_pheromone_behavior : MonoBehaviour
             sr.color = baseColor;
             gameObject.layer = LayerMask.NameToLayer("avoid_pheromone");
         }
+        if(type == "attack")
+        {
+            baseColor = alarm_color;
+            gameObject.tag = "attack_pheromone";
+            sr.color = baseColor;
+            gameObject.layer = LayerMask.NameToLayer("attack_pheromone");
+        }
     }
     public void changeradius()
     {
         final_size = secondary_radius;
     }
-    void alertants()
+    void aggrevateAnts()
+    {
+        for(int i = ants_touching_pheromones.Count-1; i>=0; i--)
+        {
+            if(ants_touching_pheromones[i] == null)
+            {
+                ants_touching_pheromones.RemoveAt(i);
+                continue;
+            }
+            AntBehavior ant = ants_touching_pheromones[i].GetComponent<AntBehavior>();
+            if(ant.attackmode)
+            {
+                continue;
+            }
+            Vector2 tempvec = this.transform.position - ant.transform.position;
+            ant.modify_attackvector(tempvec);
+            ant.initiate_attack_mode();
+        }
+    }
+    void scareAnts()
     {
         for(int i = ants_touching_pheromones.Count-1; i>=0; i--)
         {

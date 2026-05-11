@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 56958602862210902}
   - component: {fileID: 5601799944909048925}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1954975663413372575}
   - component: {fileID: 7543543050665896517}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3289294498612792470}
   - component: {fileID: 4472840985550272442}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8964292847632338184}
   - component: {fileID: 4374556266980156886}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 321209872325274737}
   - component: {fileID: 2441704878108920545}
   - component: {fileID: -7359721924839038362}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wolf_Spider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,6 +476,8 @@ MonoBehaviour:
   x: -14.9
   y: -16.6
   debugLength: 15.9
+  ants_stack_timer: 16.8
+  ants_stack_countdown: 0
   anttarget: {fileID: 0}
   full: 0
   mass: 1
@@ -485,13 +487,18 @@ MonoBehaviour:
   cur_energy: 0
   maxenergymult: 8000
   ant_nutrition_value: 2400
+  HP: 0
+  base_HP: 10
+  stuntimer: 5.58
   genome:
     speed: 0
     sense: 0
     mass: 0
     age: 0
+    scaredness: 0
   ants_eaten: 0
   ants_needed: 5
+  scaredness: 1
   fullcolor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!50 &-7359721924839038362
 Rigidbody2D:
@@ -530,7 +537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8545153425775289781}
   - component: {fileID: 3506083637829405536}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8208755483801302088}
   - component: {fileID: 6651282013623549731}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +719,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1777297876506894289}
   - component: {fileID: 6323837963220782034}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,7 +810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6142542980365264427}
   - component: {fileID: 5328600122780906712}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Triangle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -894,7 +901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 365508513444068288}
   - component: {fileID: 5167250483694240023}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

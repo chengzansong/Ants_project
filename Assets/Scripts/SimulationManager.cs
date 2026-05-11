@@ -5,7 +5,7 @@ using System;
 
 public class SimulationManager : MonoBehaviour
 {
-    public GameObject spiderprefab, antprefab, antholeprefab;
+    public GameObject spiderprefab, antprefab, antholeprefab, foodprefab;
     public bool running = false;
     [SerializeField] float spider_spawn_time = 60f, simtime = 200f, timer, simtimer;
     private List<SpiderBehavior> spawnedspiders = new List<SpiderBehavior>(), survivors = new List<SpiderBehavior>();
@@ -103,8 +103,14 @@ public class SimulationManager : MonoBehaviour
         Debug.Log("Saved to JSON");
         clearworld();
         spawnanthole();
+        spawnfood();
+        EvolutionManager.Instance.death_by_ant = 0;
         Debug.Log("Simulation started, anthole spawned");
         running = true;
+    }
+    void spawnfood()
+    {
+        Instantiate(foodprefab, this.transform.position, quaternion.identity);
     }
     public void spawnanthole()
     {
@@ -134,8 +140,19 @@ public class SimulationManager : MonoBehaviour
             spawnedspiders.RemoveAt(i);
         }
     }
+    string[] wipe = new string[] {"Pheromone", "tofood_pheromone", "tohome_pheromone", "attack_pheromone", "avoid_pheromone", "Food"};
+    void destroy_misc_objects()
+    {
+        foreach(string s in wipe)
+        {
+            GameObject[] gos = GameObject.FindGameObjectsWithTag(s);
+            foreach(GameObject go in gos)
+                Destroy(go);
+        }
+    }
     public void clearworld()
     {
+        destroy_misc_objects();
         destroy_spiders();
         if(anthole != null)
         {

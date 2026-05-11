@@ -4,15 +4,17 @@ using System;
 public class SpiderGenome
 {
     public float speed, sense, mass, age;
-    public SpiderGenome(float speed, float sense, float mass, float age)
+    public int scaredness;
+    public SpiderGenome(float speed, float sense, float mass, float age, int scaredness)
     {
         this.speed = speed;
         this.sense = sense;
         this.mass = mass;
         this.age = age;
+        this.scaredness = scaredness;
     }
     public SpiderGenome clone()
     {
-        return new SpiderGenome(speed, sense, mass, age);
+        return new SpiderGenome(speed, sense, mass, age, scaredness);
     }
 }

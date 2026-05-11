@@ -6,7 +6,7 @@ public class PheromoneBehavior : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public float decay = 1f, evaporationtime = 1f, distance = 1f;
-    private float lifetime = 0f, pheromone_check_time = 3f;
+    private float lifetime = 0f;
     SpriteRenderer sr;
     Color baseColor;
     [SerializeField] Color tohome, tofood;

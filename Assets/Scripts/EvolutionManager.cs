@@ -7,7 +7,9 @@ public class EvolutionManager : MonoBehaviour
 
     public int generation = 1, popsize = 5;
     public Vector2 speedrange = new Vector2(1.0f, 3.0f), senserange = new Vector2(2.0f, 6.0f), massrange = new Vector2(0.5f, 2.0f);
+    public int minscared = 1, maxscared = 10;
     public float mutstrength = 0.25f, basefitness = 0.5f;
+    public int death_by_ant = 0;
 
     private int surviv_count = 0;
     public List<SpiderGenome> curgenome = new List<SpiderGenome>();
@@ -31,7 +33,8 @@ public class EvolutionManager : MonoBehaviour
         SpiderGenome genome = new SpiderGenome(
             Random.Range(speedrange.x, speedrange.y),
             Random.Range(senserange.x, senserange.y),
-            Random.Range(massrange.x, massrange.y), 0f
+            Random.Range(massrange.x, massrange.y), 0f, 
+            Random.Range(minscared, maxscared)
         );
         return genome;
     }
@@ -84,14 +87,21 @@ public class EvolutionManager : MonoBehaviour
         temp.speed+= Random.Range(-mutstrength, mutstrength);
         temp.mass+= Random.Range(-mutstrength, mutstrength);
         temp.sense+= Random.Range(-mutstrength, mutstrength);
+        temp.scaredness+= Random.Range(-1, 2); 
         temp.speed = Mathf.Clamp(temp.speed, speedrange.x, speedrange.y);
         temp.sense = Mathf.Clamp(temp.sense, senserange.x, senserange.y);
         temp.mass = Mathf.Clamp(temp.mass, massrange.x, massrange.y);
+        temp.scaredness = Mathf.Clamp(temp.scaredness, minscared, maxscared);
 
         return temp;
     }
+    public void increase_death_by_ant()
+    {
+        death_by_ant++;
+    }
     public void SaveToJson()
     {
+        Debug.Log(Application.persistentDataPath);
         string path = Path.Combine(Application.persistentDataPath, "evolution.json");
         EvolutionSaveData data;
         if (File.Exists(path))
@@ -111,6 +121,7 @@ public class EvolutionManager : MonoBehaviour
         {
             generation = this.generation,
             survivors = this.surviv_count,
+            deaths_by_ant = this.death_by_ant,
             genomes = new List<SpiderGenome>()
         };
         // clone genomes

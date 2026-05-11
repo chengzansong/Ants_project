@@ -10,7 +10,6 @@ public class antlion_behavior : MonoBehaviour
     [SerializeField] float detection_radius = 1f, collision_radius = 1f, checktimer = 0.3f;
     private float countdown;
     public GameObject anttarget = null;
-    private bool selectedant = false;
     void Start()
     {
         countdown = checktimer;

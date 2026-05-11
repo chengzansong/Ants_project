@@ -51,17 +51,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dcb2a028d2d6d24aa529ff79fe54f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntBehavior
-  maxspeed: 3
+  maxspeed: 3.5
   maxforce: 100
   wanderstrength: 0.19
   rotationspeed: 100
+  mass: 1
+  attack_speed_multiplier: 1
   time_between_pheromone: 0.25
   countdown: 1
   detection_displacement: 1.5
-  detection_radius: 3
+  detection_radius: 6
   home_attraction: 0
   wobblefrequency: 10
-  time_in_panic: 5
+  time_in_alert: 10
+  massrange: {x: 1, y: 1}
   foodtarget: {fileID: 0}
   anthill: {fileID: 9205314508094624800, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
   tracking_pheromone: {fileID: 5520207528195347957, guid: 862a49e1929e8c847a80aa2cf59a052a, type: 3}
@@ -71,6 +74,7 @@ MonoBehaviour:
   selectedfood: 0
   carryingfood: 0
   panicmode: 0
+  attackmode: 0
   tohome:
     useTriggers: 0
     useLayerMask: 1
@@ -101,7 +105,25 @@ MonoBehaviour:
     maxNormalAngle: 0
   check_pheromone: 0.22
   wobble_amplitude: 1
+  anttype: 0
+  percent_worker: 0.6
+  percent_soldier: 0.4
   debugLength: 3
+  spiders:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 4096
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  selectedspider: 0
 --- !u!114 &-4499888551354848985
 MonoBehaviour:
   m_ObjectHideFlags: 0

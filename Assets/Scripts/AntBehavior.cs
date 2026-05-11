@@ -7,14 +7,15 @@ using UnityEditor.Rendering;
 
 public class AntBehavior : MonoBehaviour
 {
-    public float maxspeed = 1f, maxforce = 1f, wanderstrength = 1f,rotationspeed = 1f, mass = 1f;
+    public float maxspeed = 1f, maxforce = 1f, wanderstrength = 1f,rotationspeed = 1f, mass = 1f, attack_speed_multiplier = 1f;
     public float time_between_pheromone = 1f, countdown = 1f, detection_displacement = 1.5f, detection_radius = 1.5f;
-    [SerializeField] float home_attraction = 1f, wobblefrequency = 1f, time_in_panic = 10f, minmass = 0.5f, maxmaff = 1.5f;
+    [SerializeField] float home_attraction = 1f, wobblefrequency = 1f, time_in_alert = 10f;
+    [SerializeField] Vector2 massrange = new Vector2(0.5f, 1.5f);
     public GameObject foodtarget = null, anthill, tracking_pheromone, carriedfood, alarm_pheromone;
     public Transform head;
-    Vector2 position, velocity, desired_direction, desired_velocity, desired_force, acceleration, antlion_pos, panicvector, lastpanic;
+    Vector2 position, velocity, desired_direction, desired_velocity, desired_force, acceleration, antlion_pos, panicvector, lastpanic, attackvector, lastattack;
     [SerializeField] bool selectedfood = false;
-    public bool carryingfood = false, panicmode = false;
+    public bool carryingfood = false, panicmode = false, attackmode = false;
     List<GameObject> to_food_pheromone_in_range = new List<GameObject>(), to_home_pheromone_in_range = new List<GameObject>();
     List<Collider2D> to_food_pheromone_colliders = new List<Collider2D>(), to_home_pheromone_colliders = new List<Collider2D>();
     AntBehavior ant;
@@ -23,11 +24,17 @@ public class AntBehavior : MonoBehaviour
     public Guid Id => id;
     public ContactFilter2D tohome, tofood;
     [SerializeField] float check_pheromone = 1f, wobble_amplitude = 1f;
-    private float check_countdown = 1f, time_since_food = 0f, time_since_home = 0f, time_alive = 0f, alarm_pheromone_time = 1f,panic_countdown;
+    private float check_countdown = 1f, time_since_food = 0f, time_since_home = 0f, time_alive = 0f, alarm_pheromone_time = 1f,panic_countdown,attack_countdown;
     private Transform pheromone_placeholder;
+    [SerializeField] float anttype;
+    public float percent_worker = 0.60f, percent_soldier = 0.40f;
 
     void Start()
     {
+        anttype = UnityEngine.Random.Range(0f, 1f);
+        panicvector = new Vector2(0,0);
+        attackvector = new Vector2(0,0);
+        mass = UnityEngine.Random.Range(massrange.x, massrange.y);
         pheromone_placeholder = GameObject.Find("Spawned_pheromones").transform;
         check_countdown = UnityEngine.Random.Range(0f,1f);
         position = transform.position;
@@ -36,14 +43,14 @@ public class AntBehavior : MonoBehaviour
     }
     void Update()
     {
+        //Debug.Log("HI");
         time_alive += Time.deltaTime;
         if(eaten_by_antlion)
         {
             alarm_pheromone_time -= Time.deltaTime;
             if(alarm_pheromone_time < 0)
             {
-                release_alarm_pheromone();
-                
+                release_alarm_pheromone("avoid");
             }
             antlion_death_animation();
             return;
@@ -56,6 +63,19 @@ public class AntBehavior : MonoBehaviour
             check_countdown = check_pheromone;
             checkfood();
         }
+        
+        panic_countdown-=Time.deltaTime;
+        if(panic_countdown<=0)
+        {
+            end_panic_mode();
+        }
+
+        attack_countdown-=Time.deltaTime;
+        if(attack_countdown<=0)
+        {
+            end_attack_mode();
+        }
+
         directionDecision();
         movementPhysics();
     }
@@ -89,7 +109,16 @@ public class AntBehavior : MonoBehaviour
         desired_velocity = desired_direction * maxspeed;
         desired_force = desired_velocity - velocity;
         acceleration = Vector2.ClampMagnitude(desired_force, maxforce);
-        velocity = Vector2.ClampMagnitude(velocity + acceleration * Time.deltaTime, maxspeed);
+
+        if(attackmode) 
+        {
+            velocity = Vector2.ClampMagnitude(velocity + acceleration * Time.deltaTime, maxspeed * attack_speed_multiplier);
+        }
+        else 
+        {
+            velocity = Vector2.ClampMagnitude(velocity + acceleration * Time.deltaTime, maxspeed);
+        }
+
         position += velocity * Time.deltaTime;
         if(velocity != Vector2.zero)
         {
@@ -99,7 +128,8 @@ public class AntBehavior : MonoBehaviour
     }
     public float debugLength = 3f;
 
-    /* code to draw out the detection radius and desired direction
+    // code to draw out the detection radius and desired direction
+    /*
     void OnDrawGizmos()
     {
         //vector
@@ -115,69 +145,122 @@ public class AntBehavior : MonoBehaviour
         Gizmos.DrawWireSphere(center, detection_radius);
     }
     */
+    
+    private void run_from_danger()
+    {
+        if(panicvector == new Vector2(0,0)) panicvector = lastpanic;
+        desired_direction = panicvector.normalized;
+        lastpanic = desired_direction;
+        panicvector = new Vector2(0,0);
+        return;
+    }
+    private void run_into_danger()
+    {
+        if(attackvector == new Vector2(0,0)) attackvector = lastattack;
+        desired_direction = attackvector.normalized;
+        lastattack = desired_direction;
+        attackvector = new Vector2(0,0);
+        return; 
+    }
 
+    List<GameObject> spiders_in_detection = new List<GameObject>();
+    List<Collider2D> colliders_in_detection = new List<Collider2D>();
+    public ContactFilter2D spiders;
+    void checkspiders()
+    {
+        Vector2 center = transform.position;
+        spiders_in_detection.Clear();
+        colliders_in_detection.Clear();
+        Physics2D.OverlapCircle(center, detection_radius, spiders, colliders_in_detection);
+        for (int j = 0; j < colliders_in_detection.Count; j++)
+        {
+            GameObject log = colliders_in_detection[j].gameObject;
+            if(log == null) continue;
+            spiders_in_detection.Add(log);
+        }
+    }
+    [SerializeField] bool selectedspider = false;
+    GameObject decide_spider_target()
+    {
+        GameObject bestTarget = null;
+        float mindist = Mathf.Infinity;
+        selectedspider = true;
+        for(int i = spiders_in_detection.Count-1; i >= 0; i--)
+        {
+            if(spiders_in_detection[i] == null)
+            {
+                spiders_in_detection.RemoveAt(i);
+                continue;
+            }
+            Vector2 distance = (Vector2)spiders_in_detection[i].gameObject.transform.position - (Vector2)this.gameObject.transform.position;
+            float dist = distance.sqrMagnitude;
+            if(dist < mindist)
+            {
+                mindist = dist;
+                bestTarget = spiders_in_detection[i];
+            }
+        }
+        return bestTarget;
+    }
+
+    void search_and_attack_spiders()
+    {
+        checkspiders();
+        if(spiders_in_detection.Count > 0)
+        {
+            GameObject target = decide_spider_target();
+            if(target != null)
+            {
+                attackvector = ((Vector2)target.transform.position - (Vector2)this.transform.position).normalized;
+            }
+        }
+        run_into_danger();
+    }
+    void track_and_lay_tohome_pheromones()
+    {
+        Vector2 calculated_direction = calculate_pheromones(to_home_pheromone_in_range);
+        if(calculated_direction != new Vector2(0,0)) desired_direction = calculated_direction; 
+        // this is either += or just =; i'm not sure which is better;
+        lay_pheromones("tofood", time_since_food);
+    }
+    void track_and_lay_tofood_pheromones()
+    {
+        Vector2 calculated_direction = calculate_pheromones(to_food_pheromone_in_range);
+        if(calculated_direction != new Vector2(0,0)) desired_direction = calculated_direction; 
+        //Debug.Log($"calculated direction: {calculated_direction}");
+        lay_pheromones("tohome", time_since_home);
+    }
     void directionDecision()
     {
         if(foodtarget == null) selectedfood = false;//safeguard in case another ant destroys food;
+        
+        if(attackmode) search_and_attack_spiders(); 
+        else if(panicmode) run_from_danger();
+        
         if(selectedfood) //heading directly to food
         {
             desired_direction = ((Vector2)foodtarget.transform.position - (Vector2)transform.position).normalized;
-            lay_pheromones("tohome", time_since_home);
+            if(anttype<percent_worker)lay_pheromones("tohome", time_since_home);
         }
         else if(!selectedfood && carryingfood && foundbase)//foundfood, not sure if !selectedfood is needed, but this is close to base.
         {
             desired_direction = ((Vector2)anthill.transform.position - (Vector2)transform.position).normalized;
-            lay_pheromones("tofood", time_since_food);
+            if(anttype<percent_worker)lay_pheromones("tofood", time_since_food);
         }
         else if(!selectedfood && carryingfood)//foundfood, heading back to base
         {
-            Vector2 calculated_direction = calculate_pheromones(to_home_pheromone_in_range);
-            if(calculated_direction != new Vector2(0,0)) desired_direction = calculated_direction; 
-            // this is either += or just =; i'm not sure which is better;
-
+            if(anttype<percent_worker)track_and_lay_tohome_pheromones();
             Vector2 newdirection = UnityEngine.Random.insideUnitCircle*wanderstrength;
             desired_direction += newdirection * wanderstrength;
 
-            Vector2 tohome = ((Vector2)anthill.transform.position - (Vector2)transform.position).normalized;
-            desired_direction += tohome * home_attraction;
-
             desired_direction = desired_direction.normalized;
-
-            if(panicmode)
-            {
-                if(panicvector == new Vector2(0,0)) panicvector = lastpanic;
-                desired_direction = panicvector.normalized;
-                lastpanic = desired_direction;
-                panicvector = new Vector2(0,0);
-            }
-
-            lay_pheromones("tofood", time_since_food);
         }
         else //randomly wander, with pheromones
         {
-            Vector2 calculated_direction = calculate_pheromones(to_food_pheromone_in_range);
-            if(calculated_direction != new Vector2(0,0)) desired_direction = calculated_direction; 
-            //Debug.Log($"calculated direction: {calculated_direction}");
-            
+            if(anttype<percent_worker)track_and_lay_tofood_pheromones();
             Vector2 newdirection = UnityEngine.Random.insideUnitCircle*wanderstrength;
             desired_direction += newdirection * wanderstrength;
             desired_direction = desired_direction.normalized;
-
-            
-            if(panicmode)
-            {
-                if(panicvector == new Vector2(0,0)) panicvector = lastpanic;
-                desired_direction = panicvector.normalized;
-                lastpanic = desired_direction;
-                panicvector = new Vector2(0,0);
-            }
-
-            lay_pheromones("tohome", time_since_home);
-        }
-        panic_countdown-=Time.deltaTime;
-        if(panic_countdown<=0)
-        {
-            end_panic_mode();
         }
     }
     Vector2 calculate_pheromones(List<GameObject>usedlist)
@@ -209,7 +292,6 @@ public class AntBehavior : MonoBehaviour
     }
     void lay_pheromones(String type, float time)
     {
-        return; // temporarily just end the lay pheromones so it doesnt lag as badly
         countdown -= Time.deltaTime;
         if(countdown <= 0)
         {
@@ -306,28 +388,39 @@ public class AntBehavior : MonoBehaviour
     }
     public void initiate_panic_mode()
     {
-        panic_countdown = time_in_panic;
+        panic_countdown = time_in_alert;
         panicmode = true;
         desired_direction = desired_direction*(-1);
-        //currently this makes it so that new alarm pheromones released by the ants also release new alarm pheromones leading to a cycle of destruction
-        //will fix later
-        /*Alarm_pheromone_behavior alarm = release_alarm_pheromone();
-        alarm.changeradius();*/
+    }
+    public void initiate_attack_mode()
+    {
+        attack_countdown = time_in_alert;
+        attackmode = true;
+        //maybe add something about desired direction?
+    }
+    void end_attack_mode()
+    {
+        attackmode = false;
     }
     void end_panic_mode()
     {
         panicmode = false;
     }
-    Alarm_pheromone_behavior release_alarm_pheromone()
+    public Alarm_pheromone_behavior release_alarm_pheromone(string type)
     {
         alarm_pheromone_time = Mathf.Infinity;
         GameObject gameObject = Instantiate(alarm_pheromone, transform.position, Quaternion.identity, pheromone_placeholder);
         Alarm_pheromone_behavior newPheromone = gameObject.GetComponent<Alarm_pheromone_behavior>();
-        newPheromone.initialize("avoid");//initialize it according to its type
+        newPheromone.initialize(type);//initialize it according to its type
         return newPheromone;
     }
     public void modify_panicvector(Vector2 change)
     {
         panicvector += change;
+    }
+    
+    public void modify_attackvector(Vector2 change)
+    {
+        attackvector += change;
     }
 }

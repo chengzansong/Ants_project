@@ -8,6 +8,7 @@ public class FoodBehavior : MonoBehaviour
     public Guid selectedcarrier;
     void Start()
     {
+        this.tag = "Food";
     }
 
     // Update is called once per frame

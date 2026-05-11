@@ -14,18 +14,20 @@ public class SpiderBehavior : MonoBehaviour
     [SerializeField] float maxforce = 20f, wanderstrength = 0.07f, collision_radius = 1f, checktimer = 0.3f, x, y, debugLength = 1f, ants_stack_timer = 30f, ants_stack_countdown;
     Vector2 position, velocity, desired_direction, desired_velocity, desired_force, acceleration;
     public GameObject anttarget = null;
-    private bool selectedant = false;
+    private bool selectedant = false, stunned;
     public bool full = false;
 
     [SerializeField] float mass = 1f, speed = 1f, sense = 1f, energy_loss_time = 1f, cur_energy, maxenergymult = 1f, ant_nutrition_value = 10f, HP, base_HP = 10f;
-    private float countdown, energy_countdown, maxenergy, eloss_per_step, detection_radius, maxspeed, ants_stack;
+    private float countdown, energy_countdown, maxenergy, eloss_per_step, detection_radius, maxspeed, ants_stack, stun_countdown;
+    public float stuntimer = 10f;
     public SpiderGenome genome;
-    [SerializeField] int ants_eaten = 0, ants_needed = 5;
+    [SerializeField] int ants_eaten = 0, ants_needed = 5, scaredness = 1;
     [SerializeField] private Color fullcolor = Color.yellow;
     private SpriteRenderer[] srs;
 
     void Start()
     {
+        stunned = false;
         ants_stack = 0;
         ants_stack_countdown = ants_stack_timer;
         base_HP *= mass;
@@ -44,10 +46,11 @@ public class SpiderBehavior : MonoBehaviour
         speed = genome.speed;
         sense = genome.sense;
         mass = genome.mass;
+        scaredness = genome.scaredness;
 
         maxenergy = maxenergymult;
         cur_energy = maxenergy;
-        eloss_per_step = mass*Mathf.Pow(speed, 2f) + Mathf.Pow(sense, 2f);
+        eloss_per_step = mass*Mathf.Pow(speed, 2f) + sense * 10;
 
         detection_radius = sense;
         maxspeed = speed;
@@ -67,6 +70,7 @@ public class SpiderBehavior : MonoBehaviour
         }
         if(HP< 0)
         {
+            EvolutionManager.Instance.increase_death_by_ant();
             Destroy(gameObject);
         }
         if(energy_countdown <= 0 && ants_eaten < ants_needed)
@@ -96,6 +100,16 @@ public class SpiderBehavior : MonoBehaviour
             }
         }
         eatants();
+
+        if(stunned)
+        {
+            stun_countdown -= Time.deltaTime;
+            if(stun_countdown <= 0)
+            {
+                stunned = false;
+            }
+            return;
+        }
         directiondecision();
         movementPhysics();
     }
@@ -167,14 +181,23 @@ public class SpiderBehavior : MonoBehaviour
             AntBehavior ant = ants_in_collision[i].GetComponent<AntBehavior>();
             HP -= Mathf.Pow(2, ant.mass*5/this.mass)* Mathf.Pow(1.7f, ants_stack);
             ants_stack++;
+
+            ant.release_alarm_pheromone("attack");
+
             ants_stack_countdown = ants_stack_timer;
             Destroy(ants_in_collision[i]);
+            stunned = true;
+            stun_countdown = stuntimer;
         }
     }
     void directiondecision()
     {
         if(anttarget == null) selectedant = false;//safeguard in case another ant destroys food;
-        if(selectedant) //heading directly to the ant
+        if(selectedant && scaredness < ants_in_detection.Count)
+        {
+            desired_direction = ((Vector2)transform.position - (Vector2)anttarget.transform.position).normalized;
+        }
+        else if(selectedant) //heading directly to the ant
         {
             desired_direction = ((Vector2)anttarget.transform.position - (Vector2)transform.position).normalized;
         }

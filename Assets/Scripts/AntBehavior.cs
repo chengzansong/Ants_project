@@ -144,8 +144,8 @@ public class AntBehavior : MonoBehaviour
         Vector2 center = transform.position + transform.up * 1f * detection_displacement;
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(center, detection_radius);
-    }
-    */
+    }*/
+    
     
     private void run_from_danger()
     {

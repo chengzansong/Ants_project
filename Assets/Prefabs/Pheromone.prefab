@@ -79,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -20
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 545685496088915435}
   - component: {fileID: -6209373795191355870}
   m_Layer: 10
-  m_Name: pheromone
+  m_Name: Pheromone
   m_TagString: Pheromone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,4 +194,3 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  marked_avoid: 0

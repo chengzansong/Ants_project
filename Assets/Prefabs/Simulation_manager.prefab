@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4306418269105293215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9155943283087067554}
+  - component: {fileID: 8944400698521059311}
+  m_Layer: 0
+  m_Name: Simulation_manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9155943283087067554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306418269105293215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -66.8702, y: -22.75769, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8944400698521059311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306418269105293215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f974d79b2b0294842bd7596e79af1e4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimulationManager
+  spiderprefab: {fileID: 3105354227492890550, guid: fda4fbe3e43713747b6c2fb15d1a0aae, type: 3}
+  antprefab: {fileID: 665571894514085271, guid: 42a550fa314f235419b5d2ea00b23e07, type: 3}
+  antholeprefab: {fileID: 9205314508094624800, guid: a2058c9cf1418ae40a961b6d85b9b584, type: 3}
+  foodprefab: {fileID: 3220370291146086089, guid: da79669f5ec2d7c4aa4c9212e7822e2d, type: 3}
+  running: 0
+  spider_spawn_time: 100
+  simtime: 400
+  timer: 0
+  simtimer: 0
+  spawn1: {x: -67.9, y: 37.4}
+  spawn2: {x: -67.9, y: -37.4}
+  spawn3: {x: 35.7, y: -39.7}
+  spawn4: {x: 69.1, y: -20.6}
+  spawn5: {x: 69.1, y: 40.1}

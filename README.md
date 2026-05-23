@@ -51,6 +51,8 @@ If you have any questions regarding the simulation and/or process of how it's ma
 
 Luke Song - lukesong2008@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/chengzansong/Ants_project)
+Project Link: [https://github.com/chengzansong/Ants_project](https://github.com/chengzansong/Ants_project)
+
+
 
 
